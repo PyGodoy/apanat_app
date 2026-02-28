@@ -45,12 +45,12 @@ class _LoginViewState extends State<LoginView> {
                     AppTextField(label: "Usuário", hintlabel: "Insira seu usuário"),
                     SizedBox(height: 24,),
                     AppTextField(label: "Senha", hintlabel: "********"),
-                    SizedBox(height: 14,),
-                    AppButton(
-                      text: "Entrar", onPressed:() {
-                      print("Botão clicado");
-                      },
+                    SizedBox(height: 24,),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 14),
+                      child: AppButton(text: 'Entrar', onPressed: () {}),
                     ),
+                    SizedBox(height: 14,),
                     NoAccountText(
                       InitialText: "Não tem uma Conta? ",
                       text: " Cadastre-se",

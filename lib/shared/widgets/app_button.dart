@@ -19,8 +19,11 @@ class AppButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         foregroundColor: Color(0xFF208286),
-        fixedSize: Size.fromWidth(350),
+        minimumSize: Size(double.infinity, 48),
         elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius:BorderRadiusGeometry.circular(12)
+        )
       ),
     );
 

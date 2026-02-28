@@ -47,11 +47,12 @@ class _RegisterViewState extends State<RegisterView> {
                     AppTextField(label: "Senha", hintlabel: "********"),
                     SizedBox(height: 24,),
                     AppTextField(label: "Confirme sua senha", hintlabel: "********"),
-                    AppButton(
-                      text: "Cadastrar", onPressed:() {
-                      print("Botão clicado");
-                      },
+                    SizedBox(height: 24,),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 14),
+                      child: AppButton(text: 'Cadastrar', onPressed: () {}),
                     ),
+                    SizedBox(height: 14,),
                     NoAccountText(
                       onTap: () {
                         Navigator.pushNamed(context, '/login');
