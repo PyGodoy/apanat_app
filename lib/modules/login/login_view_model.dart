@@ -26,7 +26,12 @@ class LoginViewModel extends ChangeNotifier {
 
     isLoading = false;
     notifyListeners();
+
+    if (context.mounted) {
+      Navigator.pushNamed(context, "/home");
+    }
   }
+
   void limparErro() {
     errorMessage = null;
     notifyListeners();
