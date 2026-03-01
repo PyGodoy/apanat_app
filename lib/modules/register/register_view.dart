@@ -119,7 +119,9 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 14),
-                      child: AppButton(
+                      child: _viewModel.isLoading
+                        ? CircularProgressIndicator(color: Colors.white)
+                        : AppButton(
                         text: 'Cadastrar',
                         onPressed: () => _viewModel.register(context),
                       ),

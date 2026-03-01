@@ -105,7 +105,9 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 14),
-                      child: AppButton(
+                      child: _viewModel.isLoading
+                        ? CircularProgressIndicator(color: Colors.white,)
+                        : AppButton(
                         text: 'Entrar', 
                         onPressed: () => _viewModel.login(context)
                       ),

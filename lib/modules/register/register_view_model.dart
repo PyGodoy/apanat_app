@@ -27,6 +27,18 @@ class RegisterViewModel extends ChangeNotifier {
       notifyListeners();
       return;
     }
+
+    isLoading = true;
+    notifyListeners();
+
+    await Future.delayed(Duration(seconds: 2));
+
+    isLoading = false;
+    notifyListeners();
+
+    if(context.mounted) {
+      Navigator.pushNamed(context, "/login");
+    }
   }
 
   void limpaErro() {
