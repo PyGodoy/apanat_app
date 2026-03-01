@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_estudo/modules/login/login.view.dart';
-import 'package:flutter_estudo/modules/register/register.view.dart';
+import 'package:apanat_app/modules/login/login_view.dart';
+import 'package:apanat_app/modules/register/register_view.dart';
 
 void main() {
   runApp(const MyApp());

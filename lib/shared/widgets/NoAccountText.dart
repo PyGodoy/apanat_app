@@ -22,7 +22,7 @@ class NoAccountText extends StatelessWidget {
         Text(
           InitialText,
           style: TextStyle(
-            color: Colors.black,
+            color: const Color.fromARGB(255, 255, 255, 255),
             fontSize: 14,
           ),
         ),

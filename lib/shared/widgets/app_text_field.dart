@@ -5,11 +5,15 @@ class AppTextField extends StatelessWidget {
 
   final String label;
   final String hintlabel;
+  final TextEditingController? controller;
+  final Function(String)? onChanged;
 
   const AppTextField({
     super.key,
     required this.label,
-    required this.hintlabel
+    required this.hintlabel,
+    this.controller,
+    this.onChanged,
   });
 
   @override
@@ -30,12 +34,13 @@ class AppTextField extends StatelessWidget {
         SizedBox(height: 14,),
         Container(
           margin: EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-          
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: Colors.white)
           ),
           child: TextField(
+            controller: controller,
+            onChanged: onChanged,
             cursorColor: Color(0xFF208286),
             style:TextStyle(
               color: Colors.white
