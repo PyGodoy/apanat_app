@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:apanat_app/shared/models/stats_model.dart';
 import 'package:flutter/material.dart';
 

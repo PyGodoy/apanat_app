@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:apanat_app/shared/models/profile_model.dart';
 import 'package:apanat_app/shared/widgets/app_button.dart';
 import 'package:flutter/material.dart';

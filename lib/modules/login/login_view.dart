@@ -41,87 +41,90 @@ class _LoginViewState extends State<LoginView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [ 
                   Image.asset(
-                  'assets/images/logo.png',
-                  width: 200,
-                ),
-                SizedBox(height: 14,),
-                Text(
-                  "Bem-Vindo a Apanat",
-                  style: TextStyle(
-                    fontSize: 28,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
+                    'assets/images/logo.png',
+                    width: 200,
                   ),
-                ),
-                SizedBox(height: 14,),
-                Text(
-                  "Faça o Login para acessar o sistema",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white
+                  SizedBox(height: 14),
+                  Text(
+                    "Bem-Vindo a Apanat",
+                    style: TextStyle(
+                      fontSize: 28,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(height: 14),
+                  Text(
+                    "Faça o Login para acessar o sistema",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
                     ),
                   ),
                 ],
               ),
-            ),  
+            ),
             SingleChildScrollView(
               reverse: true,
-                child: Container(
-                  padding: EdgeInsets.all(14),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF208286),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(14), 
-                      topRight: Radius.circular(14)
-                    ),
+              child: Container(
+                padding: EdgeInsets.all(14),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Color(0xFF208286),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(14),
+                    topRight: Radius.circular(14),
                   ),
+                ),
+                child: SafeArea(
+                  top: false,    
                   child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    AppTextField(
-                      label: "E-mail", 
-                      hintlabel: "Insira seu E-mail", 
-                      controller: _viewModel.emailController,
-                      onChanged: (_) => _viewModel.limparErro(),
-                    ),
-                    SizedBox(height: 24,),
-                    AppTextField(
-                      label: "Senha", 
-                      hintlabel: "********", 
-                      controller: _viewModel.senhaController,
-                      onChanged:(_) => _viewModel.limparErro(),
-                    ),
-                    SizedBox(height: 24,),
-                    if (_viewModel.errorMessage != null)
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 24),
-                      child: Text(
-                        _viewModel.errorMessage!,
-                        style: TextStyle(color: Colors.red),
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      AppTextField(
+                        label: "E-mail",
+                        hintlabel: "Insira seu E-mail",
+                        controller: _viewModel.emailController,
+                        onChanged: (_) => _viewModel.limparErro(),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 14),
-                      child: _viewModel.isLoading
-                        ? CircularProgressIndicator(color: Colors.white,)
-                        : AppButton(
-                        text: 'Entrar', 
-                        onPressed: () => _viewModel.login(context)
+                      SizedBox(height: 24),
+                      AppTextField(
+                        label: "Senha",
+                        hintlabel: "********",
+                        controller: _viewModel.senhaController,
+                        onChanged: (_) => _viewModel.limparErro(),
                       ),
-                    ),
-                    SizedBox(height: 14,),
-                    NoAccountText(
-                      InitialText: "Não tem uma Conta? ",
-                      text: " Cadastre-se",
-                      onTap: () {
-                        Navigator.pushNamed(context, '/register');
-                      },
-                    ),
-                    SizedBox(height: 24,)
-                  ],
+                      SizedBox(height: 24),
+                      if (_viewModel.errorMessage != null)
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 24),
+                          child: Text(
+                            _viewModel.errorMessage!,
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 14),
+                        child: _viewModel.isLoading
+                            ? CircularProgressIndicator(color: Colors.white)
+                            : AppButton(
+                                text: 'Entrar',
+                                onPressed: () => _viewModel.login(context),
+                              ),
+                      ),
+                      SizedBox(height: 14),
+                      NoAccountText(
+                        InitialText: "Não tem uma Conta? ",
+                        text: " Cadastre-se",
+                        onTap: () {
+                          Navigator.pushNamed(context, '/register');
+                        },
+                      ),
+                      SizedBox(height: 12),
+                    ],
+                  ),
                 ),
               ),
             ),
