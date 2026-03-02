@@ -73,7 +73,7 @@ class _RegisterViewState extends State<RegisterView> {
                     topRight: Radius.circular(14),
                   ),
                 ),
-                child: SafeArea( // 👈 protege o conteúdo dos botões do celular
+                child: SafeArea( 
                   top: false,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
