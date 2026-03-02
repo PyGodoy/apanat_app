@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:apanat_app/shared/models/sessao_usuario.dart';
 
 class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
 
@@ -44,10 +45,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 CircleAvatar(
                   radius: 20,
-                  child: Image.asset(
-                    "assets/images/logo.png",
-                    height: 30,
-                  ),
+                  backgroundImage: NetworkImage(SessaoUsuario.imagemUrl),
                 )
               ],
             ),

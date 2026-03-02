@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:apanat_app/modules/register/register_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:apanat_app/shared/widgets/NoAccountText.dart';

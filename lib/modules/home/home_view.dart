@@ -2,7 +2,6 @@ import 'package:apanat_app/shared/models/aula_model.dart';
 import 'package:apanat_app/shared/widgets/DiaAulasWidget.dart';
 import 'package:apanat_app/shared/widgets/app_bar.dart';
 import 'package:apanat_app/shared/widgets/app_button_nav_bar.dart';
-import 'package:apanat_app/shared/widgets/aula_card.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {

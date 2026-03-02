@@ -23,7 +23,7 @@ class AulaCard extends StatefulWidget {
         margin: EdgeInsets.all(12),
         padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.white70,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: Colors.grey, width: 2)
         ),
@@ -39,7 +39,8 @@ class AulaCard extends StatefulWidget {
                   widget.aula.horario, 
                   style: TextStyle(
                     color: Color(0xFF208286), 
-                    fontSize: 14
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
@@ -54,7 +55,7 @@ class AulaCard extends StatefulWidget {
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
                 SizedBox(height: 12,),
@@ -63,14 +64,22 @@ class AulaCard extends StatefulWidget {
                   style: TextStyle(
                     color: const Color.fromARGB(255, 34, 34, 34),
                     fontSize: 14,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 SizedBox(height: 12,),
                 Row(
                   children: [
-                    Icon(Icons.group, color: Colors.grey,),
+                    Icon(Icons.group, color: Colors.grey.shade700,),
                     SizedBox(width: 5,),
-                    Text("${widget.aula.vagas} vagas")
+                    Text(
+                      "${widget.aula.vagas} vagas",
+                      style: TextStyle(
+                        color: const Color.fromARGB(255, 34, 34, 34),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    )
                   ],
                 ),
                 SizedBox(height: 12,),

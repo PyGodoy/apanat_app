@@ -1,6 +1,7 @@
 import 'package:apanat_app/modules/historico/historico_view.dart';
 import 'package:apanat_app/modules/home/home_view.dart';
 import 'package:apanat_app/modules/notificacoes/notificacoes_view.dart';
+import 'package:apanat_app/modules/perfil/perfil_view.dart';
 import 'package:flutter/material.dart';
 import 'package:apanat_app/modules/login/login_view.dart';
 import 'package:apanat_app/modules/register/register_view.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/home' : (context) => const HomeView(),
         '/historico' : (context) => HistoricoView(),
         '/notificacoes' : (context) => NotificacoesView(),
+        '/perfil' : (context) => PerfilView(),
       },
     );
   }

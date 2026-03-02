@@ -1,19 +1,14 @@
-import 'package:apanat_app/shared/models/historico_model.dart';
+import 'package:apanat_app/shared/models/notification_model.dart';
 import 'package:flutter/material.dart';
 
-class HistoricoCard extends StatefulWidget{
-  final HistoricoModel historico;
-
-  const HistoricoCard({
-    super.key,
-    required this.historico
+class NotificationCard extends StatelessWidget {
+  final NotificationModel notification;
+  
+  const NotificationCard({
+    super.key, 
+    required this.notification,
   });
-
-  @override
-  State<HistoricoCard> createState() => _HistoricoCardState();
-}
-
-class _HistoricoCardState extends State<HistoricoCard> {
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,43 +21,41 @@ class _HistoricoCardState extends State<HistoricoCard> {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
+        
         children: [
-          Container(
-            child:
-              Icon(Icons.verified_outlined, color: Color(0xFF208286),)
+          Icon(
+            Icons.notifications, 
+            color: Color(0xFF208286),
           ),
-          SizedBox(width: 12,),
+          SizedBox(width: 5,),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                widget.historico.titulo,
+                notification.nome,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w800
                 ),
               ),
               SizedBox(height: 5,),
               Text(
-                widget.historico.nomeProfessor,
+                notification.descricao,
                 style: TextStyle(
-                  color: const Color.fromARGB(255, 34, 34, 34),
+                  color: Colors.black,
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               SizedBox(height: 5,),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.date_range_outlined, color: Colors.grey.shade700, size: 20,),
+                  Icon(Icons.calendar_month_outlined, size: 20, color: Colors.grey,),
                   SizedBox(width: 5,),
                   Text(
-                    '${widget.historico.data.day}/${widget.historico.data.month}/${widget.historico.data.year}',
+                    "${notification.data.day}/${notification.data.month}/${notification.data.year}",
                     style: TextStyle(
                       color: const Color.fromARGB(255, 34, 34, 34),
                       fontSize: 14,
@@ -70,10 +63,10 @@ class _HistoricoCardState extends State<HistoricoCard> {
                     ),
                   ),
                   SizedBox(width: 12,),
-                  Icon(Icons.watch_later_outlined, color: Colors.grey.shade700, size: 20,),
+                  Icon(Icons.watch_later_outlined, size: 20, color: Colors.grey.shade700,),
                   SizedBox(width: 5,),
                   Text(
-                    widget.historico.horario,
+                    notification.horario,
                     style: TextStyle(
                       color: const Color.fromARGB(255, 34, 34, 34),
                       fontSize: 14,
