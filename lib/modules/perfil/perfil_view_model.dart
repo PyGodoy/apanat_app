@@ -10,6 +10,7 @@ class PerfilViewModel extends ChangeNotifier{
   String? telefone;
   bool isLoading = false;
   String? errorMessage;
+  int checkInsMes = 0;
   // estados
   final _authService = AuthService();
   // metodos
@@ -19,6 +20,8 @@ class PerfilViewModel extends ChangeNotifier{
     notifyListeners();    
     try {
       final dados = await _authService.getPerfil();
+      final checkins = await _authService.getCheckinsMes();
+      checkInsMes = checkins['total'];
       foto = dados['foto'];
       usuario = dados['usuario'];
       email = dados['email'];

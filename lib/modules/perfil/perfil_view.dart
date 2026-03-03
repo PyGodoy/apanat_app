@@ -25,31 +25,6 @@ class PerfilView extends StatefulWidget{
   }
 
   int _indiceSelecionado = 3;
-  
-  final List<StatsModel> stats = [
-    StatsModel(
-      icon: Icons.check_circle_outline,
-      titulo: "Check-ins", 
-      total: 42, 
-      duracao: "Este mês", 
-      color: Color(0xFF208286)
-    ),
-    StatsModel(
-      icon: Icons.water,
-      titulo: "Aulas", 
-      total: 156, 
-      duracao: "Totais realizadas", 
-      color: Color.fromARGB(255, 44, 134, 32)
-    ),
-    StatsModel(
-      icon: Icons.workspace_premium_outlined,
-      titulo: "Frequência", 
-      total: 42, 
-      sufixo: "%",
-      duracao: "Nos últimos 30 dias", 
-      color: Color.fromARGB(255, 102, 32, 134)
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +77,28 @@ class PerfilView extends StatefulWidget{
               },
             ),
           ),
-          ...stats.map((stats) => StatsCard(status: stats))
+          StatsCard(status: StatsModel(
+            icon: Icons.check_circle_outline,
+            titulo: "Check-ins",
+            total: _viewModel.checkInsMes, // ← dado real
+            duracao: "Este mês",
+            color: Color(0xFF208286)
+          )),
+          StatsCard(status: StatsModel(
+              icon: Icons.water,
+              titulo: "Aulas",
+              total: 156,
+              duracao: "Totais realizadas",
+              color: Color.fromARGB(255, 44, 134, 32)
+          )),
+          StatsCard(status: StatsModel(
+              icon: Icons.workspace_premium_outlined,
+              titulo: "Frequência",
+              total: 42,
+              sufixo: "%",
+              duracao: "Nos últimos 30 dias",
+              color: Color.fromARGB(255, 102, 32, 134)
+          )),
         ],
       ),
     ),

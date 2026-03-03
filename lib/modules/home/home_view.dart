@@ -1,3 +1,4 @@
+import 'package:apanat_app/services/auth.service.dart';
 import 'package:apanat_app/shared/models/aula_model.dart';
 import 'package:apanat_app/shared/widgets/DiaAulasWidget.dart';
 import 'package:apanat_app/shared/widgets/app_bar.dart';
@@ -14,8 +15,36 @@ class HomeView extends StatefulWidget {
 
 class _HomeView extends State<HomeView> {
   int _indiceSelecionado = 0; 
+
+  Map<String, List<AulaModel>> agruparPorDia(List<AulaModel> aulas) {
+    Map<String, List<AulaModel>> agrupadas = {};
+
+    for (var aula in aulas) {
+      if (!agrupadas.containsKey(aula.diaSemana)) {
+        agrupadas[aula.diaSemana] = [];
+      }
+      agrupadas[aula.diaSemana]!.add(aula);
+    }
+
+    return agrupadas;
+  }
+
+  List<AulaModel> aulas = [];
+
+  @override
+  void initState() {
+    super.initState();
+    carregarAulas();
+  }
+  void carregarAulas() async {
+    final dados = await AuthService().getAulas();
+    setState(() {
+      aulas = dados.map<AulaModel>((a) => AulaModel.fromJson(a)).toList();
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    final aulasAgrupadas = agruparPorDia(aulas);
     return(
       Scaffold(
         appBar: AppBarCustom(title: "Apanat"),
@@ -47,52 +76,16 @@ class _HomeView extends State<HomeView> {
                   ),
                   ),
               ),
-              Diaaulaswidget(
-                diaSemana: "Segunda-Feira", 
-                aulas: [
-                  AulaModel(
-                    horario: "08:00", 
-                    nomeProfessor: "Vivianne Alves", 
-                    titulo: "Treinamento Equipe", 
-                    vagas: 12,
-                  ),
-                  AulaModel(
-                    horario: "09:00", 
-                    nomeProfessor: "Luiz Soares", 
-                    titulo: "Treinamento Intermediário", 
-                    vagas: 12,
-                  ),
-                  AulaModel(
-                    horario: "08:00", 
-                    nomeProfessor: "Kauanny", 
-                    titulo: "Treinamento Infantil", 
-                    vagas: 12,
-                  ),
-                ]
-              ),
-              Diaaulaswidget(
-                diaSemana: "Terça-Feira", 
-                aulas: [
-                  AulaModel(
-                    horario: "08:00", 
-                    nomeProfessor: "Vivianne Alves", 
-                    titulo: "Treinamento Intermediario", 
-                    vagas: 12
-                  ),
-                  AulaModel(
-                    horario: "14:00", 
-                    nomeProfessor: "Antonio Cuba", 
-                    titulo: "Treinamento Equipe", 
-                    vagas: 12
-                  ),
-                  AulaModel(
-                    horario: "18:00", 
-                    nomeProfessor: "Kauanny", 
-                    titulo: "Treinamento Infantil", 
-                    vagas: 12
-                  )
-                ]
-              ),
+              ListView(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                children: aulasAgrupadas.entries.map((entry) {
+                  return Diaaulaswidget(
+                    diaSemana: entry.key,
+                    aulas: entry.value,
+                  );
+                }).toList(),
+              )
             ],
           ),
         ),

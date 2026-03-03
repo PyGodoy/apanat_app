@@ -1,3 +1,4 @@
+import 'package:apanat_app/services/auth.service.dart';
 import 'package:apanat_app/shared/models/aula_model.dart';
 import 'package:flutter/material.dart';
 
@@ -11,12 +12,34 @@ class AulaCard extends StatefulWidget {
 
   @override
   State<AulaCard> createState() => _AulaCard();
-  
 }
-    
+
   class _AulaCard extends State<AulaCard> {
     bool checkInRealizado = false;
+    int? checkInId;
     
+    void _verificarCheckin() async {
+      final resultado = await AuthService().verificarCheckin(widget.aula.id);
+      print('RESULTADO VERIFICAR: $resultado');
+      setState(() {
+        checkInRealizado = resultado['jaFez'];
+        checkInId = resultado['checkInId'];
+      });
+    }
+
+    void _deletarCheckin() async {
+      final deletar = await AuthService().deletarCheckin(widget.aula.id);
+      setState(() {
+        checkInRealizado = deletar['checkinDeletado'];
+      });
+    }
+    
+    @override
+    void initState(){
+      super.initState();
+      _verificarCheckin();
+      
+    }
     @override
     Widget build(BuildContext context) {
       return Container(
@@ -90,11 +113,26 @@ class AulaCard extends StatefulWidget {
                       elevation: 4,
                       backgroundColor: checkInRealizado ? Colors.red : Color(0xFF208286),
                     ),
-                    onPressed:() {
-                      setState(() {
-                        checkInRealizado = !checkInRealizado;
-                      });
-                    }, 
+                    onPressed: () async {
+                      if (checkInRealizado) {
+                        final resultado = await AuthService().deletarCheckin(checkInId!);
+
+                        if (resultado['checkinDeletado'] == true) {
+                          setState(() {
+                            checkInRealizado = false;
+                            checkInId = null;
+                          });
+                        }
+                      } else {
+                        final resultado =
+                            await AuthService().realizarCheckin(widget.aula.id);
+
+                        setState(() {
+                          checkInRealizado = true;
+                          checkInId = resultado['id'];
+                        });
+                      }
+                    },
                     child: Text(
                       checkInRealizado ? "Cancelar Check-in" : "Realizar Check-in",
                       style: TextStyle(color: Colors.white),

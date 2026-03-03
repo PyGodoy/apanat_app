@@ -104,4 +104,88 @@ class AuthService {
       rethrow;
     }
   }
+
+  Future<dynamic> getAulas() async {
+    try {
+      final token = await getToken();
+    final response = await _dio.get(
+      '$baseUrl/users/aulas',
+      options: Options(
+        headers: {'Authorization': 'Bearer $token'}
+      )
+    );
+    return response.data;
+    } catch (e) {
+      throw Exception("Não foi possivel carregar as aulas");
+    }
+  }
+
+  Future<dynamic>realizarCheckin(int id) async {
+    try {
+      final token = await getToken();
+      final response = await _dio.post(
+        "$baseUrl/users/checkin",
+        data: {'aulaId' : id},
+        options: Options(
+          headers: {'Authorization' : 'Bearer $token'}
+        )
+      );
+      return response.data;
+    } catch (e) {
+      print("🔥 ERRO REAL CHECKIN: $e");
+      rethrow; // 👈 MUITO IMPORTANTE
+    }
+  }
+
+  Future<dynamic>getCheckinsMes() async {
+    try {
+      final token = await getToken();
+      final response = await _dio.get(
+        '$baseUrl/users/checkin/mes',
+        options: Options(
+          headers: {'Authorization' : 'Bearer $token'}
+        )
+      );
+      return response.data;
+    } catch (e) {
+      throw Exception("Falha ao buscar check-ins do mês");
+    }
+  }
+
+  Future<dynamic>verificarCheckin(int id) async {
+    print('AULA ENVIADA: $id');
+    try {
+      final token = await getToken();
+      final response = await _dio.get(
+        "$baseUrl/users/checkin/hoje",
+        queryParameters: {'aula': id},
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'}
+        )
+      );
+      return response.data;
+    } catch (e){
+      print('ERRO VERIFICAR: $e'); 
+      throw Exception("Erro ao verificar Check-in");
+    }
+  }
+
+  Future<dynamic>deletarCheckin(int id) async {
+    print('DELETAR CHECKIN: $id');
+    try {
+      final token = await getToken();
+      final response = await _dio.delete(
+        '$baseUrl/users/checkin',
+        queryParameters: {'id': id},
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'}
+        )
+      );
+      return response.data;
+    } catch (e) {
+      print("ERRO DELETAR: $e");
+      throw Exception("Erro ao deletar check-in");
+    }
+  }
+
 }
