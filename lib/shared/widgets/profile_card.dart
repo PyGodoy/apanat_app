@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class ProfileCard extends StatefulWidget{
   final ProfileModel profile;
-  const ProfileCard({super.key, required this.profile});
+  final VoidCallback? onEditarPerfil;
+  const ProfileCard({super.key, required this.profile, this.onEditarPerfil,});
 
 
   @override
@@ -85,15 +86,12 @@ class ProfileCard extends StatefulWidget{
             padding: EdgeInsetsGeometry.all(12),
             child: AppButton(
                 text: "Editar Perfil", 
-                onPressed:() {
-                  setState(() {
-                    
-                  });
-                },),
-          ),
-        ],
-      ),
-    );
+                onPressed: widget.onEditarPerfil!,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
   }
-}
   

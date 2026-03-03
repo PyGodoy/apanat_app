@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:apanat_app/services/auth.service.dart';
 
 class LoginViewModel extends ChangeNotifier {
+  final _authService = AuthService();
   // Controllers
   final emailController = TextEditingController();
   final senhaController = TextEditingController();
@@ -22,14 +24,19 @@ class LoginViewModel extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    await Future.delayed(Duration(seconds: 2));
+    try {
+      await _authService.login(email, senha);
+      if (context.mounted) {
+        Navigator.pushNamed(context, "/home");
+      }
+    }
+    catch (e) {
+      print('ERRO LOGIN: $e');
+      errorMessage = "Usuario e Senha Incorretos";
+    }
 
     isLoading = false;
     notifyListeners();
-
-    if (context.mounted) {
-      Navigator.pushNamed(context, "/home");
-    }
   }
 
   void limparErro() {

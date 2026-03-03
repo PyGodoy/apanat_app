@@ -1,3 +1,4 @@
+import 'package:apanat_app/modules/perfil/perfil_view_model.dart';
 import 'package:apanat_app/shared/models/profile_model.dart';
 import 'package:apanat_app/shared/models/stats_model.dart';
 import 'package:apanat_app/shared/widgets/app_bar.dart';
@@ -13,6 +14,16 @@ class PerfilView extends StatefulWidget{
   State<PerfilView> createState() => _PerfilView();
 }
   class _PerfilView extends State<PerfilView> {
+  final PerfilViewModel _viewModel = PerfilViewModel();
+  @override
+  void initState(){
+    super.initState();
+    _viewModel.addListener(() => setState(() {
+      
+    }));
+    _viewModel.perfil();
+  }
+
   int _indiceSelecionado = 3;
   
   final List<StatsModel> stats = [
@@ -80,11 +91,15 @@ class PerfilView extends StatefulWidget{
               profile: 
               ProfileModel(
                 imagemUrl: "https://img.freepik.com/fotos-gratis/homem-cacheado-com-sorriso-largo-mostra-dentes-perfeitos-se-diverte-com-uma-conversa-interessante-tem-cabelos-escuros-e-crespos-e-crespos-contra-uma-parede-branca_273609-17092.jpg?semt=ais_hybrid&w=740&q=80", 
-                nome: "Marcos Eduardo",
-                email: "marcoseduardo@gmail.com",
+                nome: _viewModel.usuario ?? "Carregando...",
+                email: _viewModel.email ?? "Carregando...",
                 aluDesde: "Aluno desde 15 de Setembro de 2024", 
-                telefone: "(63)99999-5996"
-              )
+                telefone: _viewModel.telefone ??"Sem telefone"
+              ),
+              onEditarPerfil: () async {
+                await Navigator.pushNamed(context, "/editarperfil");
+                await _viewModel.perfil(); // atualiza ao voltar
+              },
             ),
           ),
           ...stats.map((stats) => StatsCard(status: stats))

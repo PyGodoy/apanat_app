@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:apanat_app/services/auth.service.dart';
 
 class RegisterViewModel extends ChangeNotifier {
+  final _authService = AuthService();
+  
   //controllers
   final usuarioController = TextEditingController();
   final emailController = TextEditingController();
   final senhaController = TextEditingController();
   final confsenhaController = TextEditingController();
+  
   //estados
   bool isLoading = false;
   String? errorMessage;
+  
   //metodos
   Future<void>register(BuildContext context) async {
     final usuario = usuarioController.text.trim();
@@ -29,16 +34,22 @@ class RegisterViewModel extends ChangeNotifier {
     }
 
     isLoading = true;
+    errorMessage = null;
     notifyListeners();
 
-    await Future.delayed(Duration(seconds: 2));
+    try {
+      await _authService.cadastrar(usuario, email, senha);
+
+      if (context.mounted) {
+        Navigator.pushNamed(context, "/login");
+      }
+    }
+    catch (e) {
+      errorMessage = "Erro ao cadastrar. Tente novamente";
+    }
 
     isLoading = false;
     notifyListeners();
-
-    if(context.mounted) {
-      Navigator.pushNamed(context, "/login");
-    }
   }
 
   void limpaErro() {
