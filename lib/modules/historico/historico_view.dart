@@ -26,7 +26,6 @@ class HistoricoView extends StatefulWidget {
       _viewModel.carregarHistorico();
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

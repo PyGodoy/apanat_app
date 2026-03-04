@@ -1,3 +1,4 @@
+import 'package:apanat_app/modules/notificacoes/notificacoes_view_model.dart';
 import 'package:apanat_app/shared/models/notification_model.dart';
 import 'package:apanat_app/shared/widgets/app_bar.dart';
 import 'package:apanat_app/shared/widgets/app_button_nav_bar.dart';
@@ -5,6 +6,7 @@ import 'package:apanat_app/shared/widgets/notification_card.dart';
 import 'package:flutter/material.dart';
 
 class NotificacoesView extends StatefulWidget{
+  const NotificacoesView({super.key});
   
   @override
   State<NotificacoesView> createState() => _NotificacoesView();
@@ -12,27 +14,25 @@ class NotificacoesView extends StatefulWidget{
 }
 
   class _NotificacoesView extends State<NotificacoesView> {
+    final NotificacoesViewModel _viewModel = NotificacoesViewModel();
+    @override
+    void initState() {
+      super.initState();
+      setState(() {
+        _viewModel.addListener(() => setState(() {
+          
+        }));
+        _viewModel.carregarNotificacoes();
+      });
+    }
+
+    @override
+    void dispose() {
+      super.dispose;
+      
+    }
+    
     int _indiceSelecionado = 2;
-    final List<NotificationModel> notificacoes = [
-      NotificationModel(
-        nome: "Vivianne Alves", 
-        descricao: "Não teremos aula na Sexta-Feira", 
-        data: DateTime(2026, 02, 26), 
-        horario: "08:00"
-      ),
-      NotificationModel(
-        nome: "Vivianne Alves", 
-        descricao: "Piscina em Tratamento na Segunda-Feira", 
-        data: DateTime(2026, 02, 26), 
-        horario: "11:00"
-      ),
-      NotificationModel(
-        nome: "Vivianne Alves", 
-        descricao: "Quarta será feriado na Apanat", 
-        data: DateTime(2026, 02, 26), 
-        horario: "14:32"
-      ),
-    ];
   
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,13 @@ class NotificacoesView extends StatefulWidget{
                 ),
               ),
             ),
-            ...notificacoes.map((notificacoes) => NotificationCard(notification: notificacoes))
+            ..._viewModel.notificacoes.map((item) => NotificationCard(
+              notification: NotificationModel(
+                nome: item['nome_professor'], 
+                descricao: item['descricao'], 
+                data: DateTime.parse(item['data']),
+                horario: item['horario'])
+            ))
           ],
         ),
       ),

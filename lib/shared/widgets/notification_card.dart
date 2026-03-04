@@ -55,7 +55,7 @@ class NotificationCard extends StatelessWidget {
                   Icon(Icons.calendar_month_outlined, size: 20, color: Colors.grey,),
                   SizedBox(width: 5,),
                   Text(
-                    "${notification.data.day}/${notification.data.month}/${notification.data.year}",
+                    '${notification.data.day.toString().padLeft(2, '0')}/${notification.data.month.toString().padLeft(2, '0')}/${notification.data.year}',
                     style: TextStyle(
                       color: const Color.fromARGB(255, 34, 34, 34),
                       fontSize: 14,
