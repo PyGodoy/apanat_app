@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthService {
   final Dio _dio = Dio();
 
-  final String baseUrl = 'http://10.0.2.2:3000/api';
+  final String baseUrl = 'http://192.168.68.106:3000/api';
 
   Future<dynamic> cadastrar(String usuario, String email, String senha) async {
     try {
@@ -120,20 +120,23 @@ class AuthService {
     }
   }
 
-  Future<dynamic>realizarCheckin(int id) async {
+  Future<dynamic>realizarCheckin(int id, String professor) async {
     try {
       final token = await getToken();
       final response = await _dio.post(
         "$baseUrl/users/checkin",
-        data: {'aulaId' : id},
+        data: {
+          'aulaId' : id,
+          'professor': professor,
+        },
         options: Options(
           headers: {'Authorization' : 'Bearer $token'}
         )
       );
       return response.data;
     } catch (e) {
-      print("🔥 ERRO REAL CHECKIN: $e");
-      rethrow; // 👈 MUITO IMPORTANTE
+      print("ERRO REAL CHECKIN: $e");
+      rethrow;
     }
   }
 
@@ -185,6 +188,22 @@ class AuthService {
     } catch (e) {
       print("ERRO DELETAR: $e");
       throw Exception("Erro ao deletar check-in");
+    }
+  }
+
+  Future<dynamic>getHistorico() async {
+    try {
+      final token = await getToken();
+      final response = await _dio.get(
+        '$baseUrl/users/checkin/historico',
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'}
+        )
+      );
+      return response.data;
+    } catch (e) {
+      print("Erro ao carregar: $e");
+      throw Exception("Erro ao puxar histórico");
     }
   }
 

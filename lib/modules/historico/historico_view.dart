@@ -1,3 +1,4 @@
+import 'package:apanat_app/modules/historico/historico_view_model.dart';
 import 'package:apanat_app/shared/models/historico_model.dart';
 import 'package:apanat_app/shared/widgets/app_bar.dart';
 import 'package:apanat_app/shared/widgets/app_button_nav_bar.dart';
@@ -13,45 +14,18 @@ class HistoricoView extends StatefulWidget {
   
   class _HistoricoView extends State<HistoricoView> {
   int _indiceSelecionado = 1;
+  final HistoricoViewModel _viewModel = HistoricoViewModel();
 
-  final List<HistoricoModel> historicos = [
-    HistoricoModel(
-      titulo: "Treinamento Equipe",
-      nomeProfessor: "Vivianne Alves",
-      data: DateTime(2026, 02, 21),
-      horario: "08:00",
-    ),
-    HistoricoModel(
-      titulo: "Treinamento Equipe",
-      nomeProfessor: "Vivianne Alves",
-      data: DateTime(2026, 02, 22),
-      horario: "08:00",
-    ),
-    HistoricoModel(
-      titulo: "Treinamento Equipe",
-      nomeProfessor: "Antonio Cuba",
-      data: DateTime(2026, 02, 23),
-      horario: "08:00",
-    ),
-    HistoricoModel(
-      titulo: "Treinamento Equipe",
-      nomeProfessor: "Antonio Cuba",
-      data: DateTime(2026, 02, 24),
-      horario: "08:00",
-    ),
-    HistoricoModel(
-      titulo: "Treinamento Equipe",
-      nomeProfessor: "Antonio Cuba",
-      data: DateTime(2026, 02, 25),
-      horario: "08:00",
-    ),
-    HistoricoModel(
-      titulo: "Treinamento Equipe",
-      nomeProfessor: "Antonio Cuba",
-      data: DateTime(2026, 02, 26),
-      horario: "08:00",
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _viewModel.addListener(() => setState(() {
+        
+      }));
+      _viewModel.carregarHistorico();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +59,18 @@ class HistoricoView extends StatefulWidget {
                 ),
               ),
             ),
-            ...historicos.map((historicos) => HistoricoCard(historico: historicos)).toList()
+            ..._viewModel.historico.map((item) => HistoricoCard(
+              historico: HistoricoModel(
+                titulo: item['aula'], 
+                nomeProfessor: 'Prof. '+ item['professor'],
+                data: DateTime.parse(
+                    item['criado_em'].endsWith('Z') 
+                        ? item['criado_em'] 
+                        : item['criado_em'] + 'Z'
+                ).toLocal(),
+                horario: item['horario'] ??'',
+                )
+              ))
           ],
         ),
       ),

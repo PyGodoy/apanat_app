@@ -62,7 +62,7 @@ class _HistoricoCardState extends State<HistoricoCard> {
                   Icon(Icons.date_range_outlined, color: Colors.grey.shade700, size: 20,),
                   SizedBox(width: 5,),
                   Text(
-                    '${widget.historico.data.day}/${widget.historico.data.month}/${widget.historico.data.year}',
+                    '${widget.historico.data.day.toString().padLeft(2, '0')}/${widget.historico.data.month.toString().padLeft(2,'0')}/${widget.historico.data.year}',
                     style: TextStyle(
                       color: const Color.fromARGB(255, 34, 34, 34),
                       fontSize: 14,

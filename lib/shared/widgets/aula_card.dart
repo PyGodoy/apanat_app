@@ -125,7 +125,7 @@ class AulaCard extends StatefulWidget {
                         }
                       } else {
                         final resultado =
-                            await AuthService().realizarCheckin(widget.aula.id);
+                            await AuthService().realizarCheckin(widget.aula.id, widget.aula.nomeProfessor);
 
                         setState(() {
                           checkInRealizado = true;
