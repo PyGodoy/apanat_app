@@ -11,6 +11,7 @@ class PerfilViewModel extends ChangeNotifier{
   bool isLoading = false;
   String? errorMessage;
   int checkInsMes = 0;
+  int totalAulasUser = 0;
   // estados
   final _authService = AuthService();
   // metodos
@@ -21,6 +22,8 @@ class PerfilViewModel extends ChangeNotifier{
     try {
       final dados = await _authService.getPerfil();
       final checkins = await _authService.getCheckinsMes();
+      final totalAulas = await _authService.getTotalAulas();
+      totalAulasUser = totalAulas['total'];
       checkInsMes = checkins['total'];
       foto = dados['foto'];
       usuario = dados['usuario'];
@@ -34,7 +37,9 @@ class PerfilViewModel extends ChangeNotifier{
     notifyListeners();
   }
   // dispose
+  @override
   void dispose() {
     super.dispose();
+    perfil();
   }
 }

@@ -207,4 +207,19 @@ class AuthService {
     }
   }
 
+  Future<dynamic>getTotalAulas() async {
+    try {
+      final token = await getToken();
+      final response = await _dio.get(
+        '$baseUrl/users/totalaulas',
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'}
+        )
+      );
+      return response.data;
+    } catch (e) {
+      throw Exception("Erro ao buscar total de aulas");
+    }
+  }
+
 }

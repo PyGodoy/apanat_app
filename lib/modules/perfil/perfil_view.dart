@@ -87,17 +87,9 @@ class PerfilView extends StatefulWidget{
           StatsCard(status: StatsModel(
               icon: Icons.water,
               titulo: "Aulas",
-              total: 156,
+              total: _viewModel.totalAulasUser,
               duracao: "Totais realizadas",
               color: Color.fromARGB(255, 44, 134, 32)
-          )),
-          StatsCard(status: StatsModel(
-              icon: Icons.workspace_premium_outlined,
-              titulo: "Frequência",
-              total: 42,
-              sufixo: "%",
-              duracao: "Nos últimos 30 dias",
-              color: Color.fromARGB(255, 102, 32, 134)
           )),
         ],
       ),
