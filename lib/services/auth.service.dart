@@ -35,14 +35,21 @@ class AuthService {
       );
 
       final token = response.data['token'];
+      final role = response.data['usuario']['role'];
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', token);
+      await prefs.setString('role', role);
       print('TOKEN SALVO: $token');
       return response.data;
     }
     catch (e) {
       throw Exception("Erro ao realizar login: $e");
     }
+  }
+
+  Future<String?> getRole() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('role');
   }
 
   Future<String?> getToken() async {
@@ -84,6 +91,21 @@ class AuthService {
     }
   }
 
+  Future<dynamic> getProfessores() async {
+    try {
+      final token = await getToken();
+      final response = await _dio.get(
+        '$baseUrl/users/professores',
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'}
+        )
+      );
+      return response.data;
+    } catch (e) {
+      throw Exception("Não foi possivel buscar professores");
+    }
+  }
+
   Future<dynamic>putPerfil(String usuario, String email, String telefone, String foto) async {
     try {
       final response = await _dio.put(
@@ -117,6 +139,28 @@ class AuthService {
     return response.data;
     } catch (e) {
       throw Exception("Não foi possivel carregar as aulas");
+    }
+  }
+
+  Future<dynamic> criarAula(String diaSemana, String horario, String titulo, String nomeProfessor, int vagas) async {
+    try {
+      final token = await getToken();
+      final response = await _dio.post(
+        '$baseUrl/users/criarAula',
+        data: {
+          'diaSemana': diaSemana,
+          'horario' : horario,
+          'titulo' : titulo,
+          'nomeProfessor' : nomeProfessor,
+          'vagas' : vagas
+        },
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'}
+        )
+      );
+      return response.data;
+    } catch (e) {
+      throw Exception("Erro ao criar aula");
     }
   }
 

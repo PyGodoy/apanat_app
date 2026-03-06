@@ -1,13 +1,15 @@
+import 'package:apanat_app/modules/admin/criar_aula_modal.dart';
 import 'package:apanat_app/services/auth.service.dart';
 import 'package:apanat_app/shared/models/aula_model.dart';
 import 'package:apanat_app/shared/widgets/DiaAulasWidget.dart';
 import 'package:apanat_app/shared/widgets/app_bar.dart';
+import 'package:apanat_app/shared/widgets/app_button.dart';
 import 'package:apanat_app/shared/widgets/app_button_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView ({super.key});
-  
+
   @override
   State<HomeView> createState() => _HomeView();
   
@@ -35,11 +37,21 @@ class _HomeView extends State<HomeView> {
   void initState() {
     super.initState();
     carregarAulas();
+    carregarRole();
   }
+  
   void carregarAulas() async {
     final dados = await AuthService().getAulas();
     setState(() {
       aulas = dados.map<AulaModel>((a) => AulaModel.fromJson(a)).toList();
+    });
+  }
+
+  String? _role;
+  void carregarRole() async {
+    final role = await AuthService().getRole();
+    setState(() {
+      _role = role;
     });
   }
   @override
@@ -76,6 +88,29 @@ class _HomeView extends State<HomeView> {
                   ),
                   ),
               ),
+              if (_role == 'admin') ...[
+                Container(
+                  padding: EdgeInsets.all(14),
+                  child: AppButton(
+                    text: "Criar Aula", 
+                    onPressed: () async { 
+                      await showDialog(
+                        context: context,
+                        builder: (context) => Dialog(
+                          backgroundColor: Color.fromARGB(255, 34, 34, 34),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          insetPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                          child: CriarAulaModal(),
+                        ),
+                      );
+                      carregarAulas();
+                    }
+                    ),
+                )
+                ],
+              SizedBox(height: 10,),
               ListView(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
