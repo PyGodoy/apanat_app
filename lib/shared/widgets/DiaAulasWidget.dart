@@ -3,7 +3,7 @@ import 'package:apanat_app/shared/widgets/aula_card.dart';
 import 'package:flutter/material.dart';
 
 class Diaaulaswidget extends StatelessWidget {
-
+  final VoidCallback? onAulaDeletada;
   final String diaSemana;
   final List<AulaModel> aulas;
 
@@ -11,6 +11,7 @@ class Diaaulaswidget extends StatelessWidget {
     super.key,
     required this.diaSemana,
     required this.aulas,
+    this.onAulaDeletada,
   });
 
   @override
@@ -43,7 +44,7 @@ class Diaaulaswidget extends StatelessWidget {
         ListView(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          children:aulas.map((aula) => AulaCard(aula: aula)).toList(),
+          children:aulas.map((aula) => AulaCard(aula: aula, onAulaDeletada: onAulaDeletada)).toList(),
         )
       ],
     );

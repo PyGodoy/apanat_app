@@ -142,6 +142,21 @@ class AuthService {
     }
   }
 
+  Future<dynamic> deletarAula(int id) async {
+    try {
+      final token = await getToken();
+      final response = await _dio.delete(
+        '$baseUrl/users/aulas/$id',
+        options: Options(
+          headers: {'Authorization' : 'Bearer $token'}
+        )
+      );
+      return response.data;
+    } catch (e) {
+      throw Exception("Erro ao deletar aula");
+    }
+  }
+
   Future<dynamic> criarAula(String diaSemana, String horario, String titulo, String nomeProfessor, int vagas) async {
     try {
       final token = await getToken();
@@ -265,5 +280,4 @@ class AuthService {
       throw Exception("Erro ao buscar total de aulas");
     }
   }
-
 }

@@ -25,4 +25,25 @@ class NotificacoesService {
       throw Exception("Erro ao buscar notificações");
     }
   }
+
+  Future<dynamic> createNotificacao(String nomeProfessor, String descricao, String data, String horario) async {
+    try {
+      final token = await getToken();
+      final response = await _dio.post(
+        '$baseUrl/notificacoes',
+        data: {
+          'nome_professor': nomeProfessor,
+          'descricao': descricao,
+          'data': data,
+          'horario': horario,
+        },
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'}
+        )
+      );
+      return response.data;
+    } catch (e) {
+      throw Exception("Erro ao criar notificação");
+    }
+  }
 }

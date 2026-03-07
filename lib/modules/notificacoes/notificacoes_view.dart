@@ -1,6 +1,9 @@
+import 'package:apanat_app/modules/admin/criar_notificacao_modal.dart';
 import 'package:apanat_app/modules/notificacoes/notificacoes_view_model.dart';
+import 'package:apanat_app/services/auth.service.dart';
 import 'package:apanat_app/shared/models/notification_model.dart';
 import 'package:apanat_app/shared/widgets/app_bar.dart';
+import 'package:apanat_app/shared/widgets/app_button.dart';
 import 'package:apanat_app/shared/widgets/app_button_nav_bar.dart';
 import 'package:apanat_app/shared/widgets/notification_card.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +17,21 @@ class NotificacoesView extends StatefulWidget{
 }
 
   class _NotificacoesView extends State<NotificacoesView> {
+    
     final NotificacoesViewModel _viewModel = NotificacoesViewModel();
+    
+    String? _role;
+    void carregarRole() async {
+      final role = await AuthService().getRole();
+      setState(() {
+        _role = role;
+      });
+    }
+
     @override
     void initState() {
       super.initState();
+      carregarRole();
       setState(() {
         _viewModel.addListener(() => setState(() {
           
@@ -66,6 +80,31 @@ class NotificacoesView extends StatefulWidget{
                 ),
               ),
             ),
+            SizedBox(height: 12,),
+            if (_role == 'admin') ... [
+              Container(
+                width: double.infinity,
+                padding: EdgeInsetsGeometry.symmetric(horizontal: 24),
+                child: AppButton(
+                  text: "Criar Notificação",
+                  onPressed: () async { 
+                    await showDialog(
+                      context: context,
+                      builder: (context) => Dialog(
+                        backgroundColor: Color.fromARGB(255, 34, 34, 34),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        insetPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                        child: CriarNotificacaoModal(),
+                      ),
+                    );
+                    _viewModel.carregarNotificacoes();
+                  },
+                ),
+              )
+            ],
+            SizedBox(height: 12,),
             ..._viewModel.notificacoes.map((item) => NotificationCard(
               notification: NotificationModel(
                 nome: item['nome_professor'], 

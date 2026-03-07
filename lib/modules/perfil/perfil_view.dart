@@ -65,7 +65,7 @@ class PerfilView extends StatefulWidget{
             child: ProfileCard(
               profile: 
               ProfileModel(
-                imagemUrl: "https://img.freepik.com/fotos-gratis/homem-cacheado-com-sorriso-largo-mostra-dentes-perfeitos-se-diverte-com-uma-conversa-interessante-tem-cabelos-escuros-e-crespos-e-crespos-contra-uma-parede-branca_273609-17092.jpg?semt=ais_hybrid&w=740&q=80", 
+                imagemUrl: _viewModel.foto ?? '',
                 nome: _viewModel.usuario ?? "Carregando...",
                 email: _viewModel.email ?? "Carregando...",
                 aluDesde: "Aluno desde 15 de Setembro de 2024", 

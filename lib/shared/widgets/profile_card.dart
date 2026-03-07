@@ -1,6 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:apanat_app/services/auth.service.dart';
 import 'package:apanat_app/shared/models/profile_model.dart';
 import 'package:apanat_app/shared/widgets/app_button.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileCard extends StatefulWidget{
   final ProfileModel profile;
@@ -13,6 +18,32 @@ class ProfileCard extends StatefulWidget{
 }
 
   class _ProfileCard extends State<ProfileCard> {
+  String? _fotoLocal;
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _selecionarFoto() async {
+    final XFile? imagem = await _picker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 500,
+        maxHeight: 500,
+        imageQuality: 70,
+    );
+      
+    if (imagem != null) {
+      final bytes = await File(imagem.path).readAsBytes();
+      final base64 = base64Encode(bytes);
+      await AuthService().putPerfil(
+          widget.profile.nome,
+          widget.profile.email,
+          widget.profile.telefone,
+          'data:image/jpeg;base64,$base64',
+      );
+      setState(() {
+          _fotoLocal = base64; // ← atualiza na tela
+        }
+      );
+    }
+  } 
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +60,16 @@ class ProfileCard extends StatefulWidget{
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircleAvatar(
-            radius: 50, 
-            backgroundImage: NetworkImage(widget.profile.imagemUrl),
+          GestureDetector(
+            onTap: _selecionarFoto,
+            child: CircleAvatar(
+                radius: 50,
+                backgroundImage: _fotoLocal != null
+                  ? MemoryImage(base64Decode(_fotoLocal!)) // ← foto nova
+                  : widget.profile.imagemUrl != null && widget.profile.imagemUrl!.startsWith('data:')
+                    ? MemoryImage(base64Decode(widget.profile.imagemUrl!.split(',')[1])) // ← foto do banco
+                    : NetworkImage('https://ui-avatars.com/api/?name=${widget.profile.nome}') as ImageProvider, // ← padrão
+            ),
           ),
           SizedBox(height: 20,),
           Text(

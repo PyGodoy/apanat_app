@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:apanat_app/shared/models/sessao_usuario.dart';
 
@@ -45,7 +47,11 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundImage: NetworkImage(SessaoUsuario.imagemUrl),
+                  backgroundImage: SessaoUsuario.imagemUrl != null
+                      ? SessaoUsuario.imagemUrl!.startsWith('data:')
+                        ? MemoryImage(base64Decode(SessaoUsuario.imagemUrl!.split(',')[1]))
+                        : NetworkImage(SessaoUsuario.imagemUrl!) as ImageProvider
+                      : NetworkImage('https://ui-avatars.com/api/?name=User') as ImageProvider,
                 )
               ],
             ),

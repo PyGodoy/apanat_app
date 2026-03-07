@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 
 class AulaCard extends StatefulWidget {
   final AulaModel aula;
+  final VoidCallback? onAulaDeletada;
   
   const AulaCard({
     super.key,
-    required this.aula
+    required this.aula,
+    this.onAulaDeletada,
   });
 
   @override
@@ -17,6 +19,7 @@ class AulaCard extends StatefulWidget {
   class _AulaCard extends State<AulaCard> {
     bool checkInRealizado = false;
     int? checkInId;
+    String? _role;
     
     void _verificarCheckin() async {
       final resultado = await AuthService().verificarCheckin(widget.aula.id);
@@ -38,8 +41,16 @@ class AulaCard extends StatefulWidget {
     void initState(){
       super.initState();
       _verificarCheckin();
-      
+      _carregarRole();
     }
+
+    void _carregarRole() async {
+      final role = await AuthService().getRole();
+      setState(() {
+          _role = role;
+      });
+    }
+
     @override
     Widget build(BuildContext context) {
       return Container(
@@ -138,7 +149,23 @@ class AulaCard extends StatefulWidget {
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
-                )
+                ),
+                if (_role == 'admin') ...[
+                  Container(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                      elevation: 4,
+                      backgroundColor: Colors.red ,
+                      ),
+                      onPressed:() async {
+                        await AuthService().deletarAula(widget.aula.id);
+                        widget.onAulaDeletada?.call();
+                      }, 
+                      child: Text("Cancelar aula", style: TextStyle(color: Colors.white),)
+                    ),
+                  ),
+                ]
               ],
             ),
           ],

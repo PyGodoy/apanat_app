@@ -1,4 +1,5 @@
 import 'package:apanat_app/services/auth.service.dart';
+import 'package:apanat_app/shared/models/sessao_usuario.dart';
 import 'package:flutter/material.dart';
 
 class PerfilViewModel extends ChangeNotifier{
@@ -26,6 +27,7 @@ class PerfilViewModel extends ChangeNotifier{
       totalAulasUser = totalAulas['total'];
       checkInsMes = checkins['total'];
       foto = dados['foto'];
+      SessaoUsuario.imagemUrl = dados['foto'];
       usuario = dados['usuario'];
       email = dados['email'];
       telefone = dados['telefone'];

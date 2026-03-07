@@ -118,6 +118,7 @@ class _HomeView extends State<HomeView> {
                   return Diaaulaswidget(
                     diaSemana: entry.key,
                     aulas: entry.value,
+                    onAulaDeletada: () => carregarAulas(),
                   );
                 }).toList(),
               )
