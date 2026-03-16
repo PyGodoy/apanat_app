@@ -7,6 +7,7 @@ class AppTextField extends StatelessWidget {
   final String hintlabel;
   final TextEditingController? controller;
   final Function(String)? onChanged;
+  final bool obscureText;
 
   const AppTextField({
     super.key,
@@ -14,6 +15,7 @@ class AppTextField extends StatelessWidget {
     required this.hintlabel,
     this.controller,
     this.onChanged,
+    this.obscureText = false,
   });
 
   @override
@@ -39,6 +41,7 @@ class AppTextField extends StatelessWidget {
             border: Border.all(color: Colors.white)
           ),
           child: TextField(
+            obscureText: obscureText,
             controller: controller,
             onChanged: onChanged,
             cursorColor: Color(0xFF208286),

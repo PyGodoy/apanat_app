@@ -1,4 +1,5 @@
-import 'package:apanat_app/modules/admin/criar_aula_modal.dart';
+
+import 'package:apanat_app/modules/admin/criaraula/criar_aula_modal.dart';
 import 'package:apanat_app/services/auth.service.dart';
 import 'package:apanat_app/shared/models/aula_model.dart';
 import 'package:apanat_app/shared/widgets/DiaAulasWidget.dart';

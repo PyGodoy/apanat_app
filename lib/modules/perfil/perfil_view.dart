@@ -1,7 +1,9 @@
 import 'package:apanat_app/modules/perfil/perfil_view_model.dart';
+import 'package:apanat_app/services/auth.service.dart';
 import 'package:apanat_app/shared/models/profile_model.dart';
 import 'package:apanat_app/shared/models/stats_model.dart';
 import 'package:apanat_app/shared/widgets/app_bar.dart';
+import 'package:apanat_app/shared/widgets/app_button.dart';
 import 'package:apanat_app/shared/widgets/app_button_nav_bar.dart';
 import 'package:apanat_app/shared/widgets/profile_card.dart';
 import 'package:apanat_app/shared/widgets/stats_card.dart';
@@ -15,9 +17,19 @@ class PerfilView extends StatefulWidget{
 }
   class _PerfilView extends State<PerfilView> {
   final PerfilViewModel _viewModel = PerfilViewModel();
+  String? _role;
+
+  void carregarRole() async {
+    final role = await AuthService().getRole();
+    setState(() {
+      _role = role;
+    });
+  }
+
   @override
   void initState(){
     super.initState();
+    carregarRole();
     _viewModel.addListener(() => setState(() {
       
     }));
@@ -77,6 +89,7 @@ class PerfilView extends StatefulWidget{
               },
             ),
           ),
+          if (_role == 'user') ... [
           StatsCard(status: StatsModel(
             icon: Icons.check_circle_outline,
             titulo: "Check-ins",
@@ -91,6 +104,18 @@ class PerfilView extends StatefulWidget{
               duracao: "Totais realizadas",
               color: Color.fromARGB(255, 44, 134, 32)
           )),
+          ],
+          if (_role == 'admin') ... [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: AppButton(
+                text: "Visualizar Alunos", 
+                onPressed: () async {
+                  await Navigator.pushNamed(context, "/veralunos");
+                }
+              ),
+            ),
+          ],
         ],
       ),
     ),

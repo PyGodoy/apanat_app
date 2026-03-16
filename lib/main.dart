@@ -1,3 +1,4 @@
+import 'package:apanat_app/modules/admin/veralunos/veralunos_view.dart';
 import 'package:apanat_app/modules/historico/historico_view.dart';
 import 'package:apanat_app/modules/home/home_view.dart';
 import 'package:apanat_app/modules/notificacoes/notificacoes_view.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         '/notificacoes' : (context) => NotificacoesView(),
         '/perfil' : (context) => PerfilView(),
         '/editarperfil' : (context) => EditarPerfilView(),
+        '/veralunos' : (context) => VeralunosView(),
       },
     );
   }

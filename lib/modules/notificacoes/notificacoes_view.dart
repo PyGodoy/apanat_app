@@ -1,4 +1,5 @@
-import 'package:apanat_app/modules/admin/criar_notificacao_modal.dart';
+
+import 'package:apanat_app/modules/admin/criaraula/criar_notificacao_modal.dart';
 import 'package:apanat_app/modules/notificacoes/notificacoes_view_model.dart';
 import 'package:apanat_app/services/auth.service.dart';
 import 'package:apanat_app/shared/models/notification_model.dart';

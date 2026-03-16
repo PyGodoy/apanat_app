@@ -91,6 +91,21 @@ class AuthService {
     }
   }
 
+  Future<dynamic> getAlunos() async {
+    try {
+      final token = await getToken();
+      final response = await _dio.get(
+        '$baseUrl/users/alunos',
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'}
+        ) 
+      );
+      return response.data;
+    } catch (e) {
+      throw Exception("Não foi possivel buscar alunos");
+    }
+  }
+
   Future<dynamic> getProfessores() async {
     try {
       final token = await getToken();

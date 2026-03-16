@@ -95,6 +95,7 @@ class _LoginViewState extends State<LoginView> {
                         hintlabel: "********",
                         controller: _viewModel.senhaController,
                         onChanged: (_) => _viewModel.limparErro(),
+                        obscureText: true,
                       ),
                       SizedBox(height: 24),
                       if (_viewModel.errorMessage != null)
